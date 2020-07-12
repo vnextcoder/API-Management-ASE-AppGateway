@@ -138,7 +138,7 @@
       },
       "name": "[variables('APIM-Name')]",
       "apiVersion": "2018-06-01-preview",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "tags": {},
       "properties": {
         "publisherEmail": "[parameters('apim_publisherEmail')]",
@@ -161,7 +161,7 @@
       },
       "name": "[variables('appgateway_pip_name')]",
       "apiVersion": "2018-10-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "publicIPAllocationMethod": "Dynamic"
       }
@@ -171,7 +171,7 @@
       "type": "Microsoft.Network/applicationGateways",
       "name": "[parameters('appGateway_name')]",
       "apiVersion": "2018-10-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('ASE-APIM-VNET-Name'))]"
       ],
@@ -378,7 +378,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/routeTables",
       "name": "ase-Route-Table",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "tags": {
         "displayName": "UDR - Subnet"
       },
@@ -399,7 +399,7 @@
       "apiVersion": "2017-06-01",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "aseNSG",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
           {
@@ -647,7 +647,7 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "apimNSG",
       "apiVersion": "2017-06-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "securityRules": [
           {
@@ -677,7 +677,7 @@
       },
       "name": "[variables('ASE-Plan')]",
       "apiVersion": "2016-09-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "name": "[variables('ASE-Plan')]",
         "workerSizeId": "0",
@@ -692,7 +692,7 @@
       "type": "Microsoft.Web/sites",
       "name": "[parameters('sites_srasprest_name')]",
       "apiVersion": "2016-08-01",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', concat(parameters('ase_name'), '-Plan'))]",
         "hostingEnvironment": "[parameters('ase_name')]"
