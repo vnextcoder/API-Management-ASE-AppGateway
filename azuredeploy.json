@@ -35,7 +35,7 @@
       "type": "string"
     },
     "private_dnszone_name": {
-      "defaultValue": "sarwascloud.com",
+      "defaultValue": "myexpense.tk",
       "type": "string"
     },
     "sites_srasprest_name": {
@@ -81,7 +81,7 @@
       "name": "[variables('ASE-APIM-VNET-Name')]",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2018-10-01",
-      "location": "West US",
+      "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
