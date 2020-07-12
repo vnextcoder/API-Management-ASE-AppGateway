@@ -1,5 +1,5 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.1",
   "parameters": {
     "apim_name": {
@@ -11,7 +11,7 @@
       "type": "string"
     },
     "apim_Subnet_address": {
-      "defaultValue": "10.0.1.0/28",
+      "defaultValue": "9.0.1.0/28",
       "type": "string"
     },
     "appGateway_name": {
@@ -23,15 +23,15 @@
       "type": "string"
     },
     "vnet_addressPrefixes": {
-      "defaultValue": "10.0.0.0/16",
+      "defaultValue": "9.0.0.0/16",
       "type": "string"
     },
     "ase_Subnet_address": {
-      "defaultValue": "10.0.2.0/24",
+      "defaultValue": "9.0.2.0/24",
       "type": "string"
     },
     "backend_Subnet_address": {
-      "defaultValue": "10.0.0.0/24",
+      "defaultValue": "9.0.0.0/24",
       "type": "string"
     },
     "private_dnszone_name": {
@@ -113,8 +113,8 @@
 
     {
       "name": "[parameters('private_dnszone_name')]",
-      "type": "Microsoft.Network/dnsZones",
-      "apiVersion": "2018-05-01",
+      "type": "Microsoft.Network/privateDnsZones",
+      "apiVersion": "2018-09-01",
       "location": "global",
       "tags": {},
       "properties": {
@@ -352,7 +352,7 @@
     },
 
     {
-      "apiVersion": "2015-02-01",
+      "apiVersion": "2018-02-01",
       "kind": "ASEV2",
       "name": "[parameters('ase_name')]",
       "type": "Microsoft.Web/hostingEnvironments",
@@ -360,13 +360,14 @@
       "properties": {
         "name": "[parameters('ase_name')]",
         "location": "[parameters('location')]",
+        "workerPools":[],
         "VirtualNetwork": {
           "Id": "[resourceId('Microsoft.Network/virtualNetworks', variables('ASE-APIM-VNET-Name'))]",
           "type": "Microsoft.Network/virtualNetworks",
           "Subnet": "[variables('ase-Subnet-Name')]"
         },
         "dnsSuffix": "sarwascloud.com",
-        "internalLoadBalancingMode": 3
+        "internalLoadBalancingMode": "Web"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('ASE-APIM-VNET-Name'))]"
@@ -422,7 +423,7 @@
               "protocol": "*",
               "sourcePortRange": "*",
               "destinationPortRange": "*",
-              "sourceAddressPrefix": "10.0.2.0/24",
+              "sourceAddressPrefix": "9.0.2.0/24",
               "destinationAddressPrefix": "*",
               "access": "Allow",
               "priority": 110,
@@ -605,7 +606,7 @@
               "sourcePortRange": "*",
               "destinationPortRange": "*",
               "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "10.0.2.0/24",
+              "destinationAddressPrefix": "9.0.2.0/24",
               "access": "Allow",
               "priority": 160,
               "direction": "Outbound"
@@ -633,7 +634,7 @@
               "sourcePortRange": "*",
               "destinationPortRange": "*",
               "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "10.0.2.0/23",
+              "destinationAddressPrefix": "9.0.2.0/23",
               "access": "Allow",
               "priority": 180,
               "direction": "Outbound"
